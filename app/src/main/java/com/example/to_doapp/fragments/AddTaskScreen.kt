@@ -1,30 +1,42 @@
+// AddTaskFragment.kt
 package com.example.to_doapp.fragments
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.example.to_doapp.R
-import com.example.to_doapp.fragments.SignInFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 
-class AddTaskScreen : AppCompatActivity() {
+class AddTaskFragment : Fragment() {
 
     private lateinit var taskNameEditText: EditText
     private lateinit var chooseDateButton: Button
     private lateinit var taskDescriptionEditText: EditText
     private lateinit var addTaskButton: Button
+    private lateinit var backToHomeButton: Button
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_add_task_screen)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_add_task_screen, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Initialize views
-        taskNameEditText = findViewById(R.id.taskName)
-        chooseDateButton = findViewById(R.id.chooseDateButton)
-        taskDescriptionEditText = findViewById(R.id.taskDescription)
-        addTaskButton = findViewById(R.id.addTaskButton)
+        taskNameEditText = view.findViewById(R.id.taskName)
+        chooseDateButton = view.findViewById(R.id.chooseDateButton)
+        taskDescriptionEditText = view.findViewById(R.id.taskDescription)
+        addTaskButton = view.findViewById(R.id.addTaskButton)
+        backToHomeButton = view.findViewById(R.id.backToHomeButton)
 
         // Set up date picker for the "Choose Date" button
         chooseDateButton.setOnClickListener {
@@ -42,12 +54,20 @@ class AddTaskScreen : AppCompatActivity() {
                 showConfirmation("Task added successfully")
 
                 // Navigate back to the home screen
-                val intent = Intent(this, SignInFragment::class.java) // Replace with your home screen activity class
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP // Optional: clear the back stack
-                startActivity(intent)
-                finish() // Optional: finish the current activity to remove it from the stack
+                parentFragmentManager.commit {
+                    replace(R.id.main, HomeFragment())
+                    addToBackStack(null)
+                }
             } else {
                 showConfirmation("Please fill in all fields")
+            }
+        }
+
+        // Set up the "Back to Home" button
+        backToHomeButton.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main, HomeFragment())
+                addToBackStack(null)
             }
         }
     }
@@ -59,11 +79,11 @@ class AddTaskScreen : AppCompatActivity() {
             val formattedDate = datePicker.headerText
             chooseDateButton.text = formattedDate
         }
-        datePicker.show(supportFragmentManager, "DATE_PICKER")
+        datePicker.show(parentFragmentManager, "DATE_PICKER")
     }
 
     private fun showConfirmation(message: String) {
         // Show a confirmation message (could be a Toast or Snackbar)
-        android.widget.Toast.makeText(this, message, android.widget.Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

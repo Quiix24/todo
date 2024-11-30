@@ -28,9 +28,17 @@ class SignUpFragment : Fragment() {
         val passEt: EditText = view.findViewById(R.id.passEt)
         val repassEt: EditText = view.findViewById(R.id.repassEt)
         val signinButton: Button = view.findViewById(R.id.signinButton)
+        val authButton: Button = view.findViewById(R.id.authButton)
 
         signinButton.setOnClickListener {
             validateAndNavigate(emailEt, passEt, repassEt)
+        }
+
+        authButton.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main, SignInFragment())
+                addToBackStack(null)
+            }
         }
     }
 

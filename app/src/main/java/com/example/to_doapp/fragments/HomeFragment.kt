@@ -1,10 +1,13 @@
+// HomeFragment.kt
 package com.example.to_doapp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.to_doapp.R
@@ -23,23 +26,31 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = TaskAdapter(getTaskList())
 
+        val addButton: ImageButton = view.findViewById(R.id.addTaskButton)
+        addButton.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main, AddTaskFragment())
+                addToBackStack(null)
+            }
+        }
+
         return view
     }
 
     private fun getTaskList(): List<Task> {
         return listOf(
-            Task("sport", "sex"),
-            Task("food", "sex"),
-            Task("study", "sex"),
-            Task("sport", "sex"),
-            Task("food", "sex"),
-            Task("study", "sex"),
-            Task("sport", "sex"),
-            Task("food", "sex"),
-            Task("study", "sex"),
-            Task("sport", "sex"),
-            Task("food", "sex"),
-            Task("study", "sex"),
+            Task("sport", "description"),
+            Task("food", "description"),
+            Task("study", "description"),
+            Task("sport", "description"),
+            Task("food", "description"),
+            Task("study", "description"),
+            Task("sport", "description"),
+            Task("food", "description"),
+            Task("study", "description"),
+            Task("sport", "description"),
+            Task("food", "description"),
+            Task("study", "description"),
         )
     }
 }

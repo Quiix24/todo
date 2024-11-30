@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- fragment_add_task_screen.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/background_002"
-    tools:context="com.example.to_doapp.fragments.AddTaskScreen">
+    tools:context="com.example.to_doapp.fragments.AddTaskFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -77,8 +77,6 @@
                 android:inputType="textMultiLine"
                 android:drawableStart="@drawable/baseline_description_24" />
 
-
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -86,6 +84,15 @@
                 android:id="@+id/addTaskButton"
                 android:textSize="18sp"
                 android:layout_marginTop="30dp"
+                android:backgroundTint="@color/lavender" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Back to Home"
+                android:id="@+id/backToHomeButton"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/lavender" />
 
         </LinearLayout>

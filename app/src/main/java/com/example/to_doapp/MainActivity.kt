@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         // Open SplashFragment
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                replace(R.id.main, HomeFragment())
+                replace(R.id.main, SplashFragment())
             }
         }
     }

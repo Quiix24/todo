@@ -1,55 +1,51 @@
+// SignInFragment.kt
 package com.example.to_doapp.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.to_doapp.fragments.HomeFragment
-import com.example.to_doapp.databinding.FragmentSignInBinding
+import androidx.fragment.app.commit
+import com.example.to_doapp.R
 
 class SignInFragment : Fragment() {
-
-    private var _binding: FragmentSignInBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSignInBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val usernameEditText = view.findViewById<EditText>(R.id.username)
+        val passwordEditText = view.findViewById<EditText>(R.id.password)
+        val signinButton = view.findViewById<Button>(R.id.signinButton)
+        val signupButton = view.findViewById<Button>(R.id.signupButton)
 
-        binding.loginButton.setOnClickListener {
-            val email = binding.username.text.toString().trim()
-            val password = binding.password.text.toString().trim()
+        signinButton.setOnClickListener {
+            val username = usernameEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Email and password must not be empty", Toast.LENGTH_SHORT).show()
-            } else if (email == "admin" && password == "admin") {
-                Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(requireContext(), HomeFragment::class.java)
-                startActivity(intent)
+            if (username == "admin" && password == "admin") {
+                parentFragmentManager.commit {
+                    replace(R.id.main, HomeFragment())
+                    addToBackStack(null)
+                }
             } else {
                 Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
             }
         }
 
-        binding.signupButton.setOnClickListener {
-            val intent = Intent(requireContext(), AddTaskScreen::class.java)
-            startActivity(intent)
+        signupButton.setOnClickListener {
+            parentFragmentManager.commit {
+                replace(R.id.main, SignUpFragment())
+                addToBackStack(null)
+            }
         }
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return view
     }
-
 }

@@ -24,7 +24,7 @@ class SplashFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             parentFragmentManager.commit {
                 setCustomAnimations(R.anim.fade_in, 0, 0, 0)
-                replace(R.id.main, SignUpFragment())
+                replace(R.id.main, SignInFragment())
                 addToBackStack(null)
             }
         }, 3000) // 3 seconds delay
